@@ -3,10 +3,10 @@ import './Filters.css';
 
 const Filters = ({ onApply }) => {
   const [filters, setFilters] = useState({
-    clientId: '',
-    minRiskScore: '',
-    fromDate: '',
-    toDate: '',
+    client_id: '',
+    min_score: '',
+    from: '',
+    to: '',
   });
 
   const handleChange = (e) => {
@@ -22,23 +22,23 @@ const Filters = ({ onApply }) => {
   return (
     <form className="filters-form" onSubmit={handleSubmit}>
       <div className="filter-group">
-        <label htmlFor="clientId">Client ID</label>
+        <label htmlFor="client_id">Client ID</label>
         <input
           type="text"
-          id="clientId"
-          name="clientId"
-          value={filters.clientId}
+          id="client_id"
+          name="client_id"
+          value={filters.client_id}
           onChange={handleChange}
           placeholder="Client ID"
         />
       </div>
       <div className="filter-group">
-        <label htmlFor="minRiskScore">Min Risk Score</label>
+        <label htmlFor="min_score">Min Risk Score</label>
         <input
           type="number"
-          id="minRiskScore"
-          name="minRiskScore"
-          value={filters.minRiskScore}
+          id="min_score"
+          name="min_score"
+          value={filters.min_score}
           onChange={handleChange}
           min="0"
           max="100"
@@ -46,22 +46,22 @@ const Filters = ({ onApply }) => {
         />
       </div>
       <div className="filter-group">
-        <label htmlFor="fromDate">From Date</label>
+        <label htmlFor="from">From Date</label>
         <input
           type="date"
-          id="fromDate"
-          name="fromDate"
-          value={filters.fromDate}
+          id="from"
+          name="from"
+          value={filters.from}
           onChange={handleChange}
         />
       </div>
       <div className="filter-group">
-        <label htmlFor="toDate">To Date</label>
+        <label htmlFor="to">To Date</label>
         <input
           type="date"
-          id="toDate"
-          name="toDate"
-          value={filters.toDate}
+          id="to"
+          name="to"
+          value={filters.to}
           onChange={handleChange}
         />
       </div>

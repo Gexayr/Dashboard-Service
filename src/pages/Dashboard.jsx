@@ -15,10 +15,10 @@ const Dashboard = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [filters, setFilters] = useState({
-    clientId: '',
-    minRiskScore: '',
-    fromDate: '',
-    toDate: '',
+    client_id: '',
+    min_score: '',
+    from: '',
+    to: '',
   });
 
   const fetchData = useCallback(async () => {
@@ -32,7 +32,7 @@ const Dashboard = () => {
       };
       
       const response = await getEvents(params);
-      setEvents(response.data.events || []);
+      setEvents(response.data.data || []);
       setTotalPages(response.data.total_pages || 1);
     } catch (err) {
       setError('Failed to fetch events. Please try again later.');
