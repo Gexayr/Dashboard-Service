@@ -1,9 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getEvents, getStats } from '../api/dashboard';
+import {
+  getEvents,
+  getStats,
+  getRiskOverTime,
+  getRiskDistribution,
+  getEventsPerClient
+} from '../api/dashboard';
 import Stats from '../components/Stats';
 import Filters from '../components/Filters';
 import EventsTable from '../components/EventsTable';
 import Pagination from '../components/Pagination';
+import RiskOverTimeChart from '../components/charts/RiskOverTimeChart';
+import RiskDistributionChart from '../components/charts/RiskDistributionChart';
+import EventsPerClientChart from '../components/charts/EventsPerClientChart';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -12,6 +21,13 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [statsLoading, setStatsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [riskOverTime, setRiskOverTime] = useState([]);
+  const [riskDistribution, setRiskDistribution] = useState([]);
+  const [eventsPerClient, setEventsPerClient] = useState([]);
+  const [chartsLoading, setChartsLoading] = useState(true);
+  const [chartsError, setChartsError] = useState(null);
+
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [filters, setFilters] = useState({
@@ -54,6 +70,26 @@ const Dashboard = () => {
     }
   }, [filters]);
 
+  const fetchCharts = useCallback(async () => {
+    setChartsLoading(true);
+    setChartsError(null);
+    try {
+      const [overTimeRes, distributionRes, perClientRes] = await Promise.all([
+        getRiskOverTime(filters),
+        getRiskDistribution(filters),
+        getEventsPerClient(filters)
+      ]);
+      setRiskOverTime(Array.isArray(overTimeRes.data.data) ? overTimeRes.data.data : []);
+      setRiskDistribution(Array.isArray(distributionRes.data.data) ? distributionRes.data.data : []);
+      setEventsPerClient(Array.isArray(perClientRes.data.data) ? perClientRes.data.data : []);
+    } catch (err) {
+      setChartsError('Failed to fetch chart data. Please try again later.');
+      console.error('Failed to fetch charts:', err);
+    } finally {
+      setChartsLoading(false);
+    }
+  }, [filters]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -61,6 +97,10 @@ const Dashboard = () => {
   useEffect(() => {
     fetchStats();
   }, [fetchStats]);
+
+  useEffect(() => {
+    fetchCharts();
+  }, [fetchCharts]);
 
   const handleApplyFilters = (newFilters) => {
     setFilters(newFilters);
@@ -84,6 +124,26 @@ const Dashboard = () => {
         <section className="filters-section">
           <h2>Filters</h2>
           <Filters onApply={handleApplyFilters} />
+        </section>
+
+        <section className="charts-section">
+          <RiskOverTimeChart 
+            data={riskOverTime} 
+            loading={chartsLoading} 
+            error={chartsError} 
+          />
+          <div className="charts-grid">
+            <RiskDistributionChart 
+              data={riskDistribution} 
+              loading={chartsLoading} 
+              error={chartsError} 
+            />
+            <EventsPerClientChart 
+              data={eventsPerClient} 
+              loading={chartsLoading} 
+              error={chartsError} 
+            />
+          </div>
         </section>
 
         <section className="table-section">
