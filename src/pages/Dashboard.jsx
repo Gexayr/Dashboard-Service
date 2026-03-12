@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   getEvents,
   getStats,
@@ -19,6 +20,7 @@ const Dashboard = () => {
   const [events, setEvents] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [statsLoading, setStatsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -116,6 +118,22 @@ const Dashboard = () => {
     <div className="dashboard-page">
       <header className="dashboard-header">
         <h1>Risk Monitoring Dashboard</h1>
+        <button 
+          className="nav-btn" 
+          onClick={() => navigate('/alerts')}
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#e74c3c',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            float: 'right',
+            marginTop: '-35px'
+          }}
+        >
+          View Alerts
+        </button>
       </header>
       
       <main className="dashboard-content">

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import EventDetails from './pages/EventDetails';
+import Alerts from './pages/Alerts';
 import './index.css';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/alerts" element={<Alerts />} />
           <Route path="/events/:id" element={<EventDetails />} />
         </Routes>
       </div>
