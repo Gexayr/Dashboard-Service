@@ -118,22 +118,36 @@ const Dashboard = () => {
     <div className="dashboard-page">
       <header className="dashboard-header">
         <h1>Risk Monitoring Dashboard</h1>
-        <button 
-          className="nav-btn" 
-          onClick={() => navigate('/alerts')}
-          style={{
-            padding: '8px 16px',
-            backgroundColor: '#e74c3c',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            float: 'right',
-            marginTop: '-35px'
-          }}
-        >
-          View Alerts
-        </button>
+        <div className="nav-btns" style={{ float: 'right', marginTop: '-35px', display: 'flex', gap: '10px' }}>
+          <button 
+            className="nav-btn" 
+            onClick={() => navigate('/reports')}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#27ae60',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            AI Reports
+          </button>
+          <button 
+            className="nav-btn" 
+            onClick={() => navigate('/alerts')}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#e74c3c',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            View Alerts
+          </button>
+        </div>
       </header>
       
       <main className="dashboard-content">
