@@ -47,6 +47,7 @@ const Rules = () => {
     if (rule) {
       setCurrentRule(rule);
       setFormData({
+        rule_name: rule.rule_name,
         rule_value: rule.rule_value,
         event_type: rule.event_type,
         condition_field: rule.condition_field,
