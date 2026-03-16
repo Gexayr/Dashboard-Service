@@ -13,6 +13,11 @@ const EventsTable = ({ events, loading, error }) => {
     navigate(`/events/${id}`);
   };
 
+  const handleClientClick = (e, id) => {
+    e.stopPropagation();
+    navigate(`/clients/${id}`);
+  };
+
   return (
     <div className="table-container">
       <table className="events-table">
@@ -35,7 +40,15 @@ const EventsTable = ({ events, loading, error }) => {
                 onClick={() => handleRowClick(event.id)}
               >
                 <td>{event.id}</td>
-                <td>{event.client_name || event.client_id}</td>
+                <td>
+                  <span 
+                    className="client-link"
+                    onClick={(e) => handleClientClick(e, event.client_id)}
+                    style={{ color: '#2185d0', cursor: 'pointer', textDecoration: 'underline' }}
+                  >
+                    {event.client_name || event.client_id}
+                  </span>
+                </td>
                 <td>{event.event_type}</td>
                 <td>{new Date(event.timestamp).toLocaleString()}</td>
                 <td className="risk-score-cell">

@@ -121,6 +121,20 @@ const Dashboard = () => {
         <div className="nav-btns" style={{ float: 'right', marginTop: '-35px', display: 'flex', gap: '10px' }}>
           <button 
             className="nav-btn" 
+            onClick={() => navigate('/clients')}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#9b59b6',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Client Risk
+          </button>
+          <button 
+            className="nav-btn" 
             onClick={() => navigate('/rules')}
             style={{
               padding: '8px 16px',

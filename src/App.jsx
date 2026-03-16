@@ -6,6 +6,8 @@ import Alerts from './pages/Alerts';
 import Reports from './pages/Reports';
 import ReportDetails from './pages/ReportDetails';
 import Rules from './pages/Rules';
+import Clients from './pages/Clients';
+import ClientProfile from './pages/ClientProfile';
 import './index.css';
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path="/reports" element={<Reports />} />
           <Route path="/reports/:id" element={<ReportDetails />} />
           <Route path="/rules" element={<Rules />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/clients/:id" element={<ClientProfile />} />
         </Routes>
       </div>
     </Router>
