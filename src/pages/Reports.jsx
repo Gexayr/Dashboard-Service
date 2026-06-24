@@ -13,8 +13,9 @@ const Reports = () => {
     setLoading(true);
     setError(null);
     try {
+
       const response = await getReports();
-      setReports(response.data.data || response.data || []);
+      setReports(response.data.data || []);
     } catch (err) {
       console.error('Error fetching reports:', err);
       setError('Failed to load reports. Please try again later.');

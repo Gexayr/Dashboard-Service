@@ -43,12 +43,10 @@ const Dashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      const params = {
-        ...filters,
-        page,
-        limit: 50,
-      };
-      
+      const params = Object.fromEntries(
+        Object.entries({ ...filters, page, limit: 50 }).filter(([, v]) => v !== '')
+      );
+
       const response = await getEvents(params);
       setEvents(response.data.data || []);
       setTotalPages(response.data.total_pages || 1);
@@ -63,7 +61,8 @@ const Dashboard = () => {
   const fetchStats = useCallback(async () => {
     setStatsLoading(true);
     try {
-      const response = await getStats(filters);
+      const cleanFilters = Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== ''));
+      const response = await getStats(cleanFilters);
       setStats(response.data);
     } catch (err) {
       console.error('Failed to fetch stats:', err);
@@ -76,10 +75,11 @@ const Dashboard = () => {
     setChartsLoading(true);
     setChartsError(null);
     try {
+      const cleanFilters = Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== ''));
       const [overTimeRes, distributionRes, perClientRes] = await Promise.all([
-        getRiskOverTime(filters),
-        getRiskDistribution(filters),
-        getEventsPerClient(filters)
+        getRiskOverTime(cleanFilters),
+        getRiskDistribution(cleanFilters),
+        getEventsPerClient(cleanFilters)
       ]);
       setRiskOverTime(Array.isArray(overTimeRes.data.data) ? overTimeRes.data.data : []);
       setRiskDistribution(Array.isArray(distributionRes.data.data) ? distributionRes.data.data : []);

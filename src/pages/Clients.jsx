@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getClients } from '../api/dashboard';
+import Pagination from '../components/Pagination';
 import './Clients.css';
+
+const PAGE_SIZE = 15;
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +35,9 @@ const Clients = () => {
     if (score <= 70) return 'risk-medium';
     return 'risk-high';
   };
+
+  const totalPages = Math.ceil(clients.length / PAGE_SIZE);
+  const paginated = clients.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   if (loading) return <div className="loading-container">Loading clients...</div>;
   if (error) return <div className="error-container">{error}</div>;
@@ -69,7 +76,7 @@ const Clients = () => {
             </tr>
           </thead>
           <tbody>
-            {clients.map((client) => (
+            {paginated.map((client) => (
               <tr key={client.client_id}>
                 <td>{client.client_id}</td>
                 <td>{client.total_events}</td>
@@ -80,7 +87,7 @@ const Clients = () => {
                   </span>
                 </td>
                 <td>
-                  <button 
+                  <button
                     className="view-btn"
                     onClick={() => navigate(`/clients/${client.client_id}`)}
                   >
@@ -92,6 +99,8 @@ const Clients = () => {
           </tbody>
         </table>
       </div>
+
+      <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
     </div>
   );
 };
